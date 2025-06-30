@@ -1,26 +1,47 @@
 from alternativa import Alternativas
 
 class Preguntas:
-    def __init__(self, enunciado:str, ayuda:str, indicacion_requerida:str):
+    def __init__(self, enunciado:str, ayuda:str="", indicacion_requerida:str="No"):
         self.enunciado = enunciado
         self.ayuda = ayuda
-        self.indicaion_requerida = indicacion_requerida
-        self.__lista_alternativas = [Alternativas()]
+        self.indicacion_requerida = indicacion_requerida
+        self.__lista_alternativas = self.agregar_alternativas()
 
     @property
     def lista_alternativas(self):
         return self.__lista_alternativas
+    
+    def __len__(self):
+        return len(self.lista_alternativas)
+
+
+    def agregar_alternativas(self):
+        alternativas = []
+        print("Quieres agregar ayuda?(Enter para omitir)")
+        ayuda = input("    >>> ")
+        for i in range(1, 5):
+            texto = input(f"Ingrese el texto de la alternativa {i}: ")
+            if i == 1 and ayuda != "":
+                alternativas.append(Alternativas(texto, ayuda))
+            else:
+                alternativas.append(Alternativas(texto))
+        return alternativas
+
 
     def mostrar_preguntas(self):
+        pregunta = ""
         if self.ayuda != "":
-            return f"""
+            pregunta += f"""
             Enunciado de la pregunta: {self.enunciado}
             Ayuda: {self.ayuda}
-            Alternativas: {self.lista_alternativas}
+            Es requerida: {self.indicaion_requerida}
         """
 
         else:
-            return f"""
+            pregunta += f"""
             Enunciado de la pregunta: {self.enunciado}
-            Alternativas: {self.lista_alternativas}
+            Es requerida: {self.indicaion_requerida}
         """
+        for alternativa in self.lista_alternativas:
+            pregunta += f"{alternativa.mostrar_alternativa()}"
+

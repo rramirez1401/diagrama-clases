@@ -7,10 +7,10 @@ class Alternativas:
 
     
     def mostrar_alternativa(self):
-        if self.ayuda != "":
+        if self.ayuda == "":
             return f"Alternativas: {self.contenido}"
         else:
-            return f"""
-        Alternativas: {self.contenido}
-        Ayuda: {self.ayuda}
+            return f"""Ayuda: {self.ayuda}\n
+Alternativas: {self.contenido}
         """
+
