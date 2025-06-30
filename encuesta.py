@@ -1,10 +1,12 @@
 from pregunta import Preguntas
+from usuario import Usuario
+from listado_respuestas import Respuestas
 
 class Encuesta:
     def __init__(self, nombre:str):
         self.nombre = nombre
         self.__listado_preguntas = self.agregar_preguntas()
-        self.__listado_respuestas = self.agregar_respuestas()
+        self.__listado_respuestas = []
 
 
     ## GETTER LISTADO_PREGUNTAS ##
@@ -39,22 +41,74 @@ class Encuesta:
 
         return preguntas
     
-    def agregar_respuestas(self):
-        pass
 
     def mostrar_encuesta(self):
         encuesta = ""
         for pregunta in self.listado_preguntas:
-            encuesta += f"{pregunta.mostrar_preguntas()}\n"
+            encuesta += f"{pregunta.mostrar_pregunta()}\n"
         
         return encuesta
-
-class EncuestaEdadLimitada(Encuesta):
-    def __init__(self, nombre, regiones):
-        super().__init__(nombre)
-        self.regiones = regiones
-    pass
+    
+    
+    def agregar_respuestas(self, usuario, respuestas):
+        listado = Respuestas(usuario, respuestas)
+        self.listado_respuestas.append(listado)
+        return True
 
 
 class EncuestaRegionLimitada(Encuesta):
-    pass
+    def __init__(self, nombre:str, regiones:list[int]):
+        super().__init__(nombre)
+        self.__regiones = regiones
+
+    
+
+    ## GETTER Y SETTER LISTADO_REGIONES ##
+    @property
+    def regiones(self):
+        return self.__regiones
+    
+    @regiones.setter
+    def regiones(self, regiones:list[int]):
+        self.__regiones = regiones
+
+    def agregar_respuestas(self, usuario:Usuario, respuestas):
+        if usuario.region not in self.regiones:
+            return False
+        else:
+            print("Usuario habilitado para realizar la encuesta")
+            return super().agregar_respuestas(usuario, respuestas)
+
+
+
+
+class EncuestaEdadLimitada(Encuesta):
+    def __init__(self, nombre, edad_min, edad_max):
+        super().__init__(nombre)
+        self.__edad_min = edad_min
+        self.__edad_max = edad_max
+
+    ## GETTER Y SETTER EDAD_MIN ##
+    @property
+    def edad_min(self):
+        return self.__edad_min
+    
+    @edad_min.setter
+    def edad_min(self, edad_min:int):
+        self.__edad_min = edad_min
+    
+    ## GETTER Y SETTER EDAD_MAX ##
+    @property
+    def edad_max(self):
+        return self.__edad_max
+    
+    @edad_max.setter
+    def edad_max(self, edad_max:int):
+        self.__edad_max = edad_max
+
+    def agregar_respuestas(self, usuario:Usuario, respuestas):
+        if usuario.edad not in range(self.edad_min, self.edad_max + 1):
+            return False
+        else:
+            print("Usuario habilitado para realizar la encuesta")
+            return super().agregar_respuestas(usuario, respuestas)

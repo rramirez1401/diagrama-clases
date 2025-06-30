@@ -28,19 +28,19 @@ class Preguntas:
         return alternativas
 
 
-    def mostrar_preguntas(self):
+    def mostrar_pregunta(self):
         pregunta = ""
         if self.ayuda != "":
             pregunta += f"""
             Enunciado de la pregunta: {self.enunciado}
             Ayuda: {self.ayuda}
-            Es requerida: {self.indicaion_requerida}
+            Es requerida: {self.indicacion_requerida}
         """
 
         else:
             pregunta += f"""
             Enunciado de la pregunta: {self.enunciado}
-            Es requerida: {self.indicaion_requerida}
+            Es requerida: {self.indicacion_requerida}
         """
         for alternativa in self.lista_alternativas:
             pregunta += f"{alternativa.mostrar_alternativa()}"
