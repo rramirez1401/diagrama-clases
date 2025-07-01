@@ -33,7 +33,7 @@ class Encuesta:
             if ayuda != "" and requerida == "si":
                 preguntas.append(Preguntas(enunciado, ayuda, requerida))
             elif ayuda == "" and requerida == "si":
-                preguntas.append(Preguntas(enunciado, requerida))
+                preguntas.append(Preguntas(enunciado, indicacion_requerida=requerida))
             elif ayuda != "" and requerida == "no":
                 preguntas.append(Preguntas(enunciado, ayuda))
             else:

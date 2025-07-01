@@ -45,3 +45,5 @@ class Preguntas:
         for alternativa in self.lista_alternativas:
             pregunta += f"{alternativa.mostrar_alternativa()}"
 
+        return pregunta
+
